@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_task_kanban_inherit_my_task" model="ir.ui.view">
+        <field name="name">project.task.kanban.inherit.my.task.archive.delete</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_kanban_inherit_my_task"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('o_dropdown_kanban')]//a[@type='edit']" position="after">
+                <a t-if="widget.editable" role="menuitem" type="object" name="action_archive" class="dropdown-item">Archive</a>
+                <a t-if="widget.deletable" role="menuitem" type="delete" class="dropdown-item">Delete</a>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
