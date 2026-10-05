@@ -7,12 +7,12 @@ from odoo.exceptions import UserError, ValidationError
 
 MATRIX_BASE_URL_PARAM = 'project_matrix.base_url'
 
-# Synapse room IDs use an opaque local part and a Matrix server name.  Keeping
-# the expression deliberately strict prevents an arbitrary URL from being
-# stored when it does not contain an internal room ID.
+# Room IDs are opaque.  Rooms up to version 11 include a server name, while
+# version 12 IDs are URL-safe hashes without one.  Accept both formats so URLs
+# copied from recent Element/Synapse installations can also be stored.
 MATRIX_ROOM_ID_RE = re.compile(
-    r'![A-Za-z0-9._~+/=-]+:'
-    r'(?:\[[0-9A-Fa-f:.]+\]|[A-Za-z0-9.-]+)(?::[0-9]+)?'
+    r'![A-Za-z0-9._~+/=-]+'
+    r'(?::(?:\[[0-9A-Fa-f:.]+\]|[A-Za-z0-9.-]+)(?::[0-9]+)?)?'
 )
 
 

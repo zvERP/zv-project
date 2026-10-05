@@ -1,7 +1,7 @@
 from lxml import etree
 
 from odoo.exceptions import UserError, ValidationError
-from odoo.tests.common import TransactionCase
+from odoo.tests.common import Form, TransactionCase
 
 from odoo.addons.project_matrix.models.project_project import MATRIX_BASE_URL_PARAM
 
@@ -39,6 +39,22 @@ class TestProjectMatrix(TransactionCase):
         })
 
         self.assertEqual(project.matrix_room_id, '!another-room:matrix.example.com')
+
+    def test_room_v12_url_without_server_is_normalized_from_form(self):
+        room_id = '!Nhcu5BS-UMnFX7hBVfVSoXiD7OgH6iRT-xyIuqDnpYQ'
+        with Form(self.env['project.project']) as project_form:
+            project_form.name = 'Matrix v12 project'
+            project_form.matrix_room_id = (
+                'https://element.other.example/#/room/%21'
+                'Nhcu5BS-UMnFX7hBVfVSoXiD7OgH6iRT-xyIuqDnpYQ'
+            )
+            project = project_form.save()
+
+        self.assertEqual(project.matrix_room_id, room_id)
+        self.assertEqual(
+            project.matrix_room_url,
+            'https://element.example.com/#/room/%s' % room_id,
+        )
 
     def test_invalid_room_is_rejected(self):
         with self.assertRaises(ValidationError):
@@ -113,24 +129,29 @@ class TestProjectMatrix(TransactionCase):
         arch = self.env['project.project'].get_view(view.id, 'form')['arch']
         document = etree.fromstring(arch)
 
-        matrix_rows = document.xpath(
-            "//div[@name='dates']/following-sibling::div[@name='matrix_room']"
+        matrix_room_ids = document.xpath(
+            "//div[@name='dates']/following-sibling::field"
+            "[@name='matrix_room_id']"
         )
-        self.assertEqual(len(matrix_rows), 1)
-        self.assertTrue(matrix_rows[0].xpath(".//field[@name='matrix_room_id']"))
-        self.assertTrue(matrix_rows[0].xpath(".//field[@name='matrix_room_url']"))
+        matrix_room_urls = document.xpath(
+            "//div[@name='dates']/following-sibling::field"
+            "[@name='matrix_room_url']"
+        )
+        self.assertEqual(len(matrix_room_ids), 1)
+        self.assertEqual(len(matrix_room_urls), 1)
         allocated_hours = document.xpath(
             "//div[@name='dates']/following-sibling::field"
             "[@name='allocated_hours']"
         )
         if allocated_hours:
-            detail_group_children = list(matrix_rows[0].getparent())
+            detail_group_children = list(matrix_room_ids[0].getparent())
             self.assertLess(
                 detail_group_children.index(allocated_hours[0]),
-                detail_group_children.index(matrix_rows[0]),
+                detail_group_children.index(matrix_room_ids[0]),
             )
         self.assertFalse(
             document.xpath(
-                "//page[@name='settings']//div[@name='matrix_room']"
+                "//page[@name='settings']//field"
+                "[@name='matrix_room_id' or @name='matrix_room_url']"
             )
         )

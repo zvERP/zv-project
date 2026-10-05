@@ -18,24 +18,12 @@
                 </button>
             </xpath>
             <xpath expr="//div[@name='dates']" position="after">
-                <label for="matrix_room_id" string="Matrix Room"/>
-                <div name="matrix_room" class="o_row">
-                    <field name="matrix_room_id"
-                           class="oe_edit_only"
-                           nolabel="1"
-                           placeholder="Paste a room URL or !room:example.com"/>
-                    <field name="matrix_room_url"
-                           class="oe_read_only"
-                           nolabel="1"
-                           widget="url"
-                           readonly="1"
-                           attrs="{'invisible': [('matrix_room_url', '=', False)]}"/>
-                    <field name="matrix_room_id"
-                           class="oe_read_only"
-                           nolabel="1"
-                           readonly="1"
-                           attrs="{'invisible': [('matrix_room_url', '!=', False)]}"/>
-                </div>
+                <field name="matrix_room_id"
+                       placeholder="Paste a room URL or !room:example.com"/>
+                <field name="matrix_room_url"
+                       widget="url"
+                       readonly="1"
+                       attrs="{'invisible': [('matrix_room_url', '=', False)]}"/>
             </xpath>
         </field>
     </record>
