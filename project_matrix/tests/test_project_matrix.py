@@ -1,3 +1,5 @@
+from lxml import etree
+
 from odoo.exceptions import UserError, ValidationError
 from odoo.tests.common import TransactionCase
 
@@ -105,3 +107,30 @@ class TestProjectMatrix(TransactionCase):
             self.env['res.config.settings'].create({
                 'matrix_base_url': 'https://[invalid',
             })
+
+    def test_matrix_room_is_in_project_header_details(self):
+        view = self.env.ref('project.edit_project')
+        arch = self.env['project.project'].get_view(view.id, 'form')['arch']
+        document = etree.fromstring(arch)
+
+        matrix_rows = document.xpath(
+            "//div[@name='dates']/following-sibling::div[@name='matrix_room']"
+        )
+        self.assertEqual(len(matrix_rows), 1)
+        self.assertTrue(matrix_rows[0].xpath(".//field[@name='matrix_room_id']"))
+        self.assertTrue(matrix_rows[0].xpath(".//field[@name='matrix_room_url']"))
+        allocated_hours = document.xpath(
+            "//div[@name='dates']/following-sibling::field"
+            "[@name='allocated_hours']"
+        )
+        if allocated_hours:
+            detail_group_children = list(matrix_rows[0].getparent())
+            self.assertLess(
+                detail_group_children.index(allocated_hours[0]),
+                detail_group_children.index(matrix_rows[0]),
+            )
+        self.assertFalse(
+            document.xpath(
+                "//page[@name='settings']//div[@name='matrix_room']"
+            )
+        )
