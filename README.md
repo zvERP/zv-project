@@ -8,6 +8,7 @@ Project addons for Odoo 16.0.
 
 | Addon | Version | Summary |
 | --- | --- | --- |
+| [project_matrix](project_matrix/) | 16.0.1.0.0 | Link projects to Matrix rooms |
 | [project_timemoney](project_timemoney/) | 16.0.1.0.0 | Hours and analytic performance statistics on projects |
 | [project_task_kanban_archive_delete](project_task_kanban_archive_delete/) | 16.0.1.0.0 | Archive and delete tasks from the My Tasks kanban card menu |
 

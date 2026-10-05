@@ -1,0 +1,66 @@
+# Spanish translation for project_matrix
+# Copyright (C) zvERP
+# This file is distributed under the AGPL-3 license.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-05 00:00+0000\n"
+"PO-Revision-Date: 2026-10-05 00:00+0000\n"
+"Last-Translator: zvERP\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: project_matrix
+#: model:ir.model.fields,field_description:project_matrix.field_project_project__matrix_room_id
+msgid "Matrix Room ID"
+msgstr "ID de la sala de Matrix"
+
+#. module: project_matrix
+#: model:ir.model.fields,field_description:project_matrix.field_project_project__matrix_room_url
+msgid "Matrix Room URL"
+msgstr "URL de la sala de Matrix"
+
+#. module: project_matrix
+#: model:ir.model.fields,field_description:project_matrix.field_res_config_settings__matrix_base_url
+msgid "Element Base URL"
+msgstr "URL base de Element"
+
+#. module: project_matrix
+#: model_terms:ir.ui.view,arch_db:project_matrix.project_project_view_form_matrix
+msgid "Matrix Room"
+msgstr "Sala de Matrix"
+
+#. module: project_matrix
+#: model_terms:ir.ui.view,arch_db:project_matrix.res_config_settings_view_form_matrix
+msgid "Base URL of the Element installation used to open project rooms"
+msgstr "URL base de la instalación de Element usada para abrir las salas de los proyectos"
+
+#. module: project_matrix
+#: code:addons/project_matrix/models/project_project.py:0
+#, python-format
+msgid "The Matrix room must be an internal room ID beginning with \"!\" or a URL containing one."
+msgstr "La sala de Matrix debe ser un ID interno que empiece por «!» o una URL que lo contenga."
+
+#. module: project_matrix
+#: code:addons/project_matrix/models/project_project.py:0
+#, python-format
+msgid "This project does not have a Matrix room."
+msgstr "Este proyecto no tiene una sala de Matrix."
+
+#. module: project_matrix
+#: code:addons/project_matrix/models/project_project.py:0
+#, python-format
+msgid "Configure a valid Matrix base URL in the Project settings before opening the room."
+msgstr "Configura una URL base de Matrix válida en los ajustes de Proyecto antes de abrir la sala."
+
+#. module: project_matrix
+#: code:addons/project_matrix/models/res_config_settings.py:0
+#, python-format
+msgid "The Element base URL must be a valid HTTP or HTTPS URL."
+msgstr "La URL base de Element debe ser una URL HTTP o HTTPS válida."
