@@ -17,3 +17,5 @@ Project addons for Odoo 16.0.
 This repository follows the OCA addon-repository layout expected by Runboat. The
 Odoo series is identified by the `16.0` branch. After the repository has been
 enabled in a Runboat controller, use the badge above to create a build.
+
+ci launch
